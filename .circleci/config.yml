@@ -32,10 +32,10 @@ jobs:
             wget https://sourceforge.net/projects/halium-bacon/files/HALIUM-7.1-02_01_2021_22_30-bacon.zip
             unzip HALIUM*
             wget https://images.plasma-mobile.org/caf-rootfs/pm-rootfs-20200212-130311.tar.gz
-            ./halium-install -p ut -u phablet -r phablet pm-rootfs-20200212-130311.tar.gz system.img
+            sudo ./halium-install -p ut -u phablet -r phablet pm-rootfs-20200212-130311.tar.gz system.img
             cd ~/halium/out
             export ZIPNAME="PlasmaMobile-7.1-$(date +%d_%m_%Y_%H_%M)-bacon.zip"
-            zip -rv9 $ZIPNAME *
+            sudo zip -rv9 $ZIPNAME *
       - run:
           name: Upload Rootfs + System To SourceForge
           no_output_timeout: 20m
