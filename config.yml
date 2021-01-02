@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  android:
+   docker:
+      - image: dopaemon/docker-image:android
+   steps:
+      - run:
+          name: Create SSH
+          no_output_timeout: 20m
+          command: |
+            mkdir -p ~/.ssh
+            ssh-keyscan -t rsa frs.sourceforge.net >> ~/.ssh/known_hosts
+            ssh-keygen -t rsa -f ~/.ssh/id_rsa -q -P ""
+      - run:
+          name: apt install wget
+          no_output_timeout: 20m
+          command: |
+            sudo apt install wget -y
+      - run:
+          name: Start Halium Install
+          no_output_timeout: 20m
+          command: |
+            git clone https://github.com/KernelPanic-OpenSource/halium-install.git ~/halium
+            cd ~/halium
+            wget https://sourceforge.net/projects/halium-bacon/files/HALIUM-7.1-02_01_2021_22_30-bacon.zip
+            unzip HALIUM*
+            wget https://images.plasma-mobile.org/caf-rootfs/pm-rootfs-20200212-130311.tar.gz
+            ./halium-install -p ut -u phablet -r phablet pm-rootfs-20200212-130311.tar.gz system.img
+            cd ~/halium/out
+            export ZIPNAME="PlasmaMobile-7.1-$(date +%d_%m_%Y_%H_%M)-bacon.zip"
+            zip -rv9 $ZIPNAME *
+      - run:
+          name: Upload Rootfs + System To SourceForge
+          no_output_timeout: 20m
+          command: |
+            sudo apt install -y rsync sshpass
+            ls -la
+            sshpass -p "$PASSWORD" rsync -avz -e ssh $ZIPFILE dopaemon@frs.sourceforge.net:/home/frs/project/halium-bacon/
+workflows:
+  version: 2.1
+  cooking:
+    jobs:
+      - android
