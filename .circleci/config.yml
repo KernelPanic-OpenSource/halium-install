@@ -24,6 +24,13 @@ jobs:
             sudo apt update
             sudo apt install -y qemu-utils binfmt-support qemu-user-static e2fsprogs sudo android-tools-fsutils binutils
       - run:
+          name: Check Disk
+          no_output_timeout: 20m
+          command: |
+            sudo ls /proc/sys/fs/binfmt_misc
+            echo "#########################"
+            sudo ls /proc/sys/fs/
+      - run:
           name: Start Halium Install
           no_output_timeout: 20m
           command: |
