@@ -22,7 +22,7 @@ jobs:
           no_output_timeout: 20m
           command: |
             sudo apt update
-            sudo apt install -y qemu-utils binfmt-support qemu-user-static e2fsprogs sudo simg2img binutils
+            sudo apt install -y qemu-utils binfmt-support qemu-user-static e2fsprogs sudo android-tools-fsutils binutils
       - run:
           name: Start Halium Install
           no_output_timeout: 20m
