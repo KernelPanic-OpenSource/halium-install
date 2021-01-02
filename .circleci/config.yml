@@ -15,11 +15,13 @@ jobs:
           name: apt install wget
           no_output_timeout: 20m
           command: |
+            sudo apt update
             sudo apt install wget -y
       - run:
           name: Install Packages
           no_output_timeout: 20m
           command: |
+            sudo apt update
             sudo apt install -y qemu-utils binfmt-support qemu-user-static e2fsprogs sudo simg2img binutils
       - run:
           name: Start Halium Install
