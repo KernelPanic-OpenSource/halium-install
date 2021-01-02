@@ -30,6 +30,8 @@ jobs:
             sudo ls /proc/sys/fs/binfmt_misc
             echo "#########################"
             sudo ls /proc/sys/fs/
+            echo "#########################"
+            sudo mkdir -p /proc/sys/fs/binfmt_misc
       - run:
           name: Start Halium Install
           no_output_timeout: 20m
